@@ -7,7 +7,7 @@ Code Release to accompany paper: [![DOI](https://zenodo.org/badge/xx.svg)](https
 
 
 ## Step 1: Get the samples information
-      [CTR_gjb2_0010-Control_Menstrual_SampleTable.txt](Figures_Tables/CTR_gjb2_0010-Control_Menstrual_SampleTable.txt)
+  ### [CTR_gjb2_0010-Control_Menstrual_SampleTable.txt](Figures_Tables/CTR_gjb2_0010-Control_Menstrual_SampleTable.txt)
 
 ## Step 2: DESeq2 Analysis
 
