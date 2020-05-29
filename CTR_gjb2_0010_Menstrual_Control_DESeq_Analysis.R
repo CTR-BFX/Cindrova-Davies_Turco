@@ -423,7 +423,7 @@ dev.off()
 
 
 message("+-------------------------------------------------------------------------------+")
-message("+               Heatmap for the 100 significant                                 +")
+message("+               Heatmap for the 101 significant                                 +")
 message("+-------------------------------------------------------------------------------+")
 
 
@@ -468,6 +468,124 @@ sel.cols <- 5
 width <- 7; height = 10
 
 heatmap_mat_fn(rlds, genes2plot, ensE, samTable, del.cols, sel.cols, outfile, width, height)
+
+
+message("+--- Select stress markers to show that endometrial and menstrual organoids of the same patient in same level ----+")
+
+smarkers.dat <- res.menstrual.mer[grep("stress", res.menstrual.mer$description),]
+hmarkers.dat <- res.menstrual.mer[grep("hypoxia", res.menstrual.mer$description),]
+stressmarkers <- unique(c("GDF15", "TNF", "HSPA5", "HSPA9", "AGER", "HSP90AA1", "HSP90AB1", "HSP90B1", "TRAP1", 
+                   smarkers.dat$external_gene_name, hmarkers.dat$external_gene_name,
+                   "APOE", "SELENOP", "SOD3", "FOXO1", "LEP", "SLC6A4", "PMAIP1", "EGR1", "CYP1A1"))
+stressmarkers.dat <- res.menstrual.mer[res.menstrual.mer$external_gene_name%in%stressmarkers==T, ]
+stressmarkers.dat$description <- gsub("..Source.*", "", stressmarkers.dat$description)
+
+test <- stressmarkers[stressmarkers%in%res.menstrual.sig$external_gene_name==T]
+testall <- stressmarkers[stressmarkers%in%res.menstrual.mer$external_gene_name==T]
+## none of the above are in the significant DEGs
+
+stressmarkers.dat <- stressmarkers.dat[order(stressmarkers.dat$description), ]
+
+stressmarkers.dat <- stressmarkers.dat[-c(2,10,51,52,59),]
+stressmarkers.dat$stress <- c("Inflammation", "ER stress", rep("Oxidative stress", 6), rep("Inflammation",2), "ER stress",
+                              rep("Oxidative stress", 41), "ER stress", "Oxidative stress", rep("ER stress", 4), 
+                              "Oxidative stress", rep("Inflammation",2))
+
+stressmarkers.dat <- stressmarkers.dat[order(stressmarkers.dat$stress), ]
+
+message("+---        Heatmap to all samples with these stress markers                        ----+")
+
+functionPlotHeatmap_DataSort <- function(rlds, sel.cols, ensEMBL2id, selGenes, cont.cols){
+  
+  mat1 <- as.data.frame(assay(rlds)[,sel.cols])
+  mat1$ensembl_gene_id <- rownames(mat1)
+  mat1.merE <- merge(mat1, ensEMBL2id, by="ensembl_gene_id")
+  mat1.sel <- mat1.merE[mat1.merE$external_gene_name%in%selGenes==T,]
+  mat1.sHeatmat <- mat1.sel[,cont.cols]
+  rownames(mat1.sHeatmat) <- mat1.sel$external_gene_name
+  mat1.sHeatmat <- mat1.sHeatmat[order(rownames(mat1.sHeatmat)),]
+  mat1.sHeatmat
+}
+
+selGenes.stress <- list(stressmarkers.dat[stressmarkers.dat$stress=="ER stress", 7], 
+                     stressmarkers.dat[stressmarkers.dat$stress=="Inflammation", 7],
+                     stressmarkers.dat[stressmarkers.dat$stress=="Oxidative stress", 7])
+sel.cols <- c(1:14)
+cont.cols <- c(2:15)
+rlds <- rld.menstrual
+stress.gomat.all <- list()
+for (i in 1:3){
+  selGenes <- selGenes.stress[[i]]
+  stress.gomat.all[[i]] <- functionPlotHeatmap_DataSort(rlds, sel.cols, ensEMBL2id, selGenes, cont.cols)
+  
+  stress.gomat.all
+}
+
+stress.goHeatmat  <- rbind(stress.gomat.all[[1]], stress.gomat.all[[3]], stress.gomat.all[[2]])
+
+minval <- floor(min(stress.goHeatmat ))-1
+maxval <- round(max(stress.goHeatmat ))+1
+breaksList.pro = seq(minval, maxval, by = 1)
+ScaleCols.pro <- colorRampPalette(colors = c("purple4","white","green"))(length(breaksList.pro))
+
+stress.goHeatmap <- Heatmap(as.matrix(stress.goHeatmat),
+                               col = ScaleCols.pro, 
+                               name = "Stress Relating", show_row_names=T,
+                               show_column_names = T, width = unit(4, "cm"),
+                               heatmap_legend_param = list(title = "Expression"),
+                               cluster_rows = F,show_row_dend = F,
+                               row_order=c(1:61),
+                               column_title="Stress Relating",
+                               column_order=c(1:14),
+                               column_names_gp = gpar( fontsize = 6),
+                               row_title_rot = 0,
+                               row_gap = unit(8, "mm"),
+                               row_names_gp = gpar( fontsize = 8),
+                               row_title_gp = gpar(fontsize =10, fontface = "bold"),
+                               row_split = rep(c("ER stress", 
+                                                 "Oxidative stress",
+                                                 "Inflammation"), 
+                                               c(7,49,5)) )
+pdf(paste0(out.dir, "/", Project, "-Heatmap_endometrial_Menstrual_stress_N61.pdf"))
+print(stress.goHeatmap)
+dev.off()
+
+
+
+
+message("+---        Heatmap to B75 (EPL)  and B70 (BP) samples with these stress markers      ----+")
+
+stress.goHeatmap.sub <- Heatmap(as.matrix(stress.goHeatmat[,c(7:8,13:14)]),
+                                col = ScaleCols.pro, 
+                                name = "Stress Relating", show_row_names=T,
+                                show_column_names = T, width = unit(4, "cm"),
+                                heatmap_legend_param = list(title = "Expression"),
+                                cluster_rows = F,show_row_dend = F,
+                                row_order=c(1:61),
+                                column_title="Stress Relating",
+                                column_order=c(1:4),
+                                column_names_gp = gpar( fontsize = 6),
+                                row_title_rot = 0,
+                                row_gap = unit(8, "mm"),
+                                row_names_gp = gpar( fontsize = 8),
+                                row_title_gp = gpar(fontsize =10, fontface = "bold"),
+                                row_split = rep(c("ER stress", 
+                                                  "Oxidative stress",
+                                                  "Inflammation"), 
+                                                c(7,49,5)) )
+pdf(paste0(out.dir, "/", Project, "-Heatmap_endometrial_Menstrual_stress_N61_B70_B75.pdf"))
+print(stress.goHeatmap.sub)
+dev.off()
+
+
+
+
+
+
+
+
+
+
 
 
 
