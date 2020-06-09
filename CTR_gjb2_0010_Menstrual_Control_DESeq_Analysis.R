@@ -46,6 +46,7 @@ suppressPackageStartupMessages({
   library("limma")
   library("apeglm")
   library("ComplexHeatmap")
+  library("readxl")
 })
 
 
@@ -91,13 +92,13 @@ sampleLabels     <- gsub("_", "-", sampleLabels)
 sampleIndividual <- substr(sampleLabels,1,3)
 
 sampleCondition  <- sampleNames
-sampleCondition  <- gsub("B55_S.*",  "Control", sampleCondition)
-sampleCondition  <- gsub("B60_S.*",  "Control", sampleCondition)
-sampleCondition  <- gsub("B61_S.*",  "Control", sampleCondition)
-sampleCondition  <- gsub("B70_S.*",  "Control", sampleCondition)
-sampleCondition  <- gsub("B72_S.*",  "Control", sampleCondition)
-sampleCondition  <- gsub("B74_S.*",  "Control", sampleCondition)
-sampleCondition  <- gsub("B75_S.*",  "Control", sampleCondition)
+sampleCondition  <- gsub("B55_S.*",  "Endometrial", sampleCondition)
+sampleCondition  <- gsub("B60_S.*",  "Endometrial", sampleCondition)
+sampleCondition  <- gsub("B61_S.*",  "Endometrial", sampleCondition)
+sampleCondition  <- gsub("B70_S.*",  "Endometrial", sampleCondition)
+sampleCondition  <- gsub("B72_S.*",  "Endometrial", sampleCondition)
+sampleCondition  <- gsub("B74_S.*",  "Endometrial", sampleCondition)
+sampleCondition  <- gsub("B75_S.*",  "Endometrial", sampleCondition)
 
 sampleCondition  <- gsub("B55M_S.*",  "Menstrual", sampleCondition)
 sampleCondition  <- gsub("B60M_S.*",  "Menstrual", sampleCondition)
@@ -439,18 +440,18 @@ heatmap_mat_fn <- function(rlds, genes2plot, ensE, samTable, del.cols, sel.cols,
   mat2 <- mat1.ann.dedup[,-c(del.cols)]
   samTable <- as.data.frame(samTable)
   samTable <- samTable[order(samTable$Labels),]
-  rownames(samTable) <- samTable$sampleName
-  colnames(mat2) <- samTable$sampleName
+  rownames(samTable) <- samTable$Labels
+  colnames(mat2) <- samTable$Labels
   condition <- samTable[, sel.cols]
   annotation_col <- as.data.frame(condition)
   names(annotation_col) <- "Treatment"
-  rownames(annotation_col) <- samTable$sampleName
+  rownames(annotation_col) <- samTable$Labels
   Treatment <- annotation_col$condition
-  ann_colors <- list(Treatment = c(Control="steelblue3", Menstrual="darkred" ))
+  ann_colors <- list(Treatment = c(Endometrial="steelblue3", Menstrual="darkred" ))
   pdf(outfile, onefile=FALSE, width=width, height=height)
   par(bg=NA)
   pheatmap(mat2,  annotation_col = annotation_col, annotation_colors = ann_colors,
-           fontsize=7, fontsize_row=3, show_rownames=T, cluster_cols = T,
+           fontsize=7, fontsize_row=6, show_rownames=T, cluster_cols = T,
            cluster_rows=T,treeheight_row = 0)
   dev.off()
   
@@ -577,12 +578,123 @@ pdf(paste0(out.dir, "/", Project, "-Heatmap_endometrial_Menstrual_stress_N61_B70
 print(stress.goHeatmap.sub)
 dev.off()
 
+message("+---- Add heatmap for stem cells as Tereza selected  ----+")
 
+stemcell <- read_excel(paste0(out.dir,"/Menstrual_StemCell_markers.xls"))
+colnames(stemcell) <- c("Category", "external_gene_name")
+stemcell.mer <- merge(stemcell, res.menstrual.mer, by = "external_gene_name", all.x=T)
 
+categories <- unique(stemcell.mer$Category)
 
+selGenes.stem <- list(stemcell.mer[stemcell.mer$Category==categories[1], 1], 
+                        stemcell.mer[stemcell.mer$Category==categories[2], 1],
+                        stemcell.mer[stemcell.mer$Category==categories[3], 1],
+                        stemcell.mer[stemcell.mer$Category==categories[4], 1],
+                        stemcell.mer[stemcell.mer$Category==categories[5], 1],
+                        stemcell.mer[stemcell.mer$Category==categories[6], 1],
+                        stemcell.mer[stemcell.mer$Category==categories[7], 1])
 
+sel.cols <- c(1:14)
+cont.cols <- c(2:15)
+rlds <- rld.menstrual
+stem.cat.all <- list()
+for (i in 1:7){
+  selGenes <- selGenes.stem[[i]]
+  stem.cat.all[[i]] <- functionPlotHeatmap_DataSort(rlds, sel.cols, ensEMBL2id, selGenes, cont.cols)
+  
+  stem.cat.all
+}
 
+stem.catHeatmat  <- rbind(stem.cat.all[[1]], stem.cat.all[[2]], stem.cat.all[[3]],
+                          stem.cat.all[[4]], stem.cat.all[[5]], stem.cat.all[[6]],stem.cat.all[[7]])
+stem.len <- unlist(lapply(stem.cat.all, function(x) dim(x)[1]))
+stem.rowTot <- sum(stem.len)
 
+minval <- floor(min(stem.catHeatmat ))-1
+maxval <- round(max(stem.catHeatmat ))+1
+breaksList.stem = seq(minval, maxval, by = 1)
+ScaleCols.stem <- colorRampPalette(colors = c("purple4","white","green"))(length(breaksList.stem))
+
+stem.catHeatmap.ori <- Heatmap(as.matrix(stem.catHeatmat),
+                            col = ScaleCols.stem, 
+                            name = "Stem Cell", show_row_names=T,
+                            show_column_names = T, width = unit(4, "cm"),
+                            heatmap_legend_param = list(title = "Expression"),
+                            cluster_rows = F,show_row_dend = F,
+                            cluster_columns=F,
+                            row_order=c(1:stem.rowTot),
+                            column_title="Stem Cell",
+                            column_order=c(1:14),
+                            column_names_gp = gpar( fontsize = 6),
+                            row_title_rot = 0,
+                            row_gap = unit(8, "mm"),
+                            row_names_gp = gpar( fontsize = 8),
+                            row_title_gp = gpar(fontsize =10, fontface = "bold"),
+                            row_split = rep(categories, stem.len)
+                            )
+stem.catHeatmap.ord <- Heatmap(as.matrix(stem.catHeatmat[,c(1,3,5,7,9,11,13,2,4,6,8,10,12,14)]),
+                           col = ScaleCols.stem, 
+                           name = "Stem Cell", show_row_names=T,
+                           show_column_names = T, width = unit(4, "cm"),
+                           heatmap_legend_param = list(title = "Expression"),
+                           cluster_rows = F,show_row_dend = F,
+                           cluster_columns=F,
+                           row_order=c(1:stem.rowTot),
+                           column_title="Stem Cell",
+                           column_order=c(1:14),
+                           column_split = rep(c("Endometrial", "Menstrual"), c(7,7)),
+                           column_names_gp = gpar( fontsize = 6),
+                           row_title_rot = 0,
+                           row_gap = unit(8, "mm"),
+                           row_names_gp = gpar( fontsize = 8),
+                           row_title_gp = gpar(fontsize =10, fontface = "bold"),
+                           row_split = rep(categories, stem.len)
+)
+pdf(paste0(out.dir, "/", Project, "-Heatmap_endometrial_Menstrual_stemcell_N38_Cat7.pdf"))
+print(stem.catHeatmap.ori)
+print(stem.catHeatmap.ord)
+dev.off()
+
+stem.catHeatmap.sub.ori <- Heatmap(as.matrix(stem.catHeatmat[,c(7:8,13:14)]),
+                               col = ScaleCols.stem, 
+                               name = "Stem Cell", show_row_names=T,
+                               show_column_names = T, width = unit(4, "cm"),
+                               heatmap_legend_param = list(title = "Expression"),
+                               cluster_rows = F,show_row_dend = F,
+                               cluster_columns=F,
+                               row_order=c(1:stem.rowTot),
+                               column_title="Stem Cell",
+                               column_order=c(1:4),
+                               column_names_gp = gpar( fontsize = 6),
+                               column_split = rep(c("BP", "EPL"), c(2,2)),
+                               row_title_rot = 0,
+                               row_gap = unit(8, "mm"),
+                               row_names_gp = gpar( fontsize = 8),
+                               row_title_gp = gpar(fontsize =10, fontface = "bold"),
+                               row_split = rep(categories, stem.len)
+)
+stem.catHeatmap.sub.ord <- Heatmap(as.matrix(stem.catHeatmat[,c(7,13,8,14)]),
+                               col = ScaleCols.stem, 
+                               name = "Stem Cell", show_row_names=T,
+                               show_column_names = T, width = unit(4, "cm"),
+                               heatmap_legend_param = list(title = "Expression"),
+                               cluster_rows = F,show_row_dend = F,
+                               cluster_columns=F,
+                               row_order=c(1:stem.rowTot),
+                               column_title="Stem Cell",
+                               column_order=c(1:4),
+                               column_split = rep(c("Endometrial", "Menstrual"), c(2,2)),
+                               column_names_gp = gpar( fontsize = 6),
+                               row_title_rot = 0,
+                               row_gap = unit(8, "mm"),
+                               row_names_gp = gpar( fontsize = 8),
+                               row_title_gp = gpar(fontsize =10, fontface = "bold"),
+                               row_split = rep(categories, stem.len)
+)
+pdf(paste0(out.dir, "/", Project, "-Heatmap_endometrial_Menstrual_stemcell_N38_Cat7_B70_B75.pdf"))
+print(stem.catHeatmap.sub.ori)
+print(stem.catHeatmap.sub.ord)
+dev.off()
 
 
 

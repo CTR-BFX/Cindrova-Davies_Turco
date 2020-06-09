@@ -22,15 +22,9 @@ Code Release to accompany paper: [![DOI](https://zenodo.org/badge/xx.svg)](https
 |CTR_gjb2_0010-Menstrual_Control_sigDEGs_N101_List.csv|[[CSV](Figures_Tables/CTR_gjb2_0010-Menstrual_Control_sigDEGs_N101_List.csv)]|
 |CTR_gjb2_0010-Heatmap_endometrial_Menstrual_stress_N61.pdf|[[PDF](Figures_Tables/CTR_gjb2_0010-Heatmap_endometrial_Menstrual_stress_N61.pdf)]|
 |CTR_gjb2_0010-Heatmap_endometrial_Menstrual_stress_N61_B70_B75.pdf|[[PDF](Figures_Tables/CTR_gjb2_0010-Heatmap_endometrial_Menstrual_stress_N61_B70_B75.pdf)]|
-
-
-
-
-
-
-
-
-
+|CTR_gjb2_0010-Heatmap_endometrial_Menstrual_stemcell_N38_Cat7_B70_B75.pdf|[[PDF](Figures_Tables/CTR_gjb2_0010-Heatmap_endometrial_Menstrual_stemcell_N38_Cat7_B70_B75.pdf)]|
+|CTR_gjb2_0010-Heatmap_endometrial_Menstrual_stress_N61_B70_B75.pdf|[[PDF](Figures_Tables/CTR_gjb2_0010-Heatmap_endometrial_Menstrual_stress_N61_B70_B75.pdf)]|
+|Menstrual_StemCell_markers.xls|[[XLS](Figures_Tables/Menstrual_StemCell_markers.xls)]|
 
 
 
