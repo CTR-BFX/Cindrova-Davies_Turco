@@ -7,7 +7,15 @@ Code Release to accompany paper: [![DOI](https://zenodo.org/badge/xx.svg)](https
 
 
 ## Step 1: Get the samples information
+
   ### [CTR_gjb2_0010-Control_Menstrual_SampleTable.txt](Figures_Tables/CTR_gjb2_0010-Control_Menstrual_SampleTable.txt)
+
+  ### Sequencing Data Quality Control (FastQC, v0.11.5), Adapter trimming (Trim_galore, v0.6.4) and alignments processed using
+ClusterFlow [[GitHub](https://github.com/ewels/clusterflow)] [[DOI](http://dx.doi.org/10.12688/f1000research.10335.2)] "fastq_star";
+
+         eg.  cf --genome GRCh38 --single fastq_star B61_S5_R1_001_merged.fastq.gz
+
+  ### Sequencing Data report summary using MultiQC(v.1.4);
 
 ## Step 2: DESeq2 Analysis
 
@@ -29,7 +37,7 @@ Code Release to accompany paper: [![DOI](https://zenodo.org/badge/xx.svg)](https
 
 
 
-## Software Versions & Methods
+## Software R Versions & Methods
 
 ````
 R version 3.6.2 (2019-12-12)
@@ -71,7 +79,8 @@ other attached packages:
 [17] BiocParallel_1.20.1         matrixStats_0.56.0         
 [19] Biobase_2.46.0              GenomicRanges_1.38.0       
 [21] GenomeInfoDb_1.22.1         IRanges_2.20.2             
-[23] S4Vectors_0.24.4            BiocGenerics_0.32.0               
+[23] S4Vectors_0.24.4            BiocGenerics_0.32.0    
+.....           
 ````
 
 ## Contact
