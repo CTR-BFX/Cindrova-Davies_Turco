@@ -22,6 +22,8 @@ Code Release to accompany paper: [![DOI](https://zenodo.org/badge/xx.svg)](https
 ## Step 3: Differential Analysis using R (v3.6.2) with DESeq2 (v1.26.0)
 
                               Design formula ~ individual + condition
+The analysis code is
+[CTR_gjb2_0010_Menstrual_Control_DESeq_Analysis.R](CTR_gjb2_0010_Menstrual_Control_DESeq_Analysis.R)
 Corresponding results are given below
 
 | Files | Name   |
