@@ -1,4 +1,5 @@
-# Cindrova-Davies_Burton_Menstrual
+# Menstrual flow as a non-invasive source of endometrial organoids
+Tereza Cindrova-Davies, Xiahui Zhao, Kay Elder, Ashley Moffett, Margherita Y Turco, Graham J Burton
 
 RNASeq  analysis for Endometrial organoids compare to Menstrual  with 7 individuals using DESeq2 package in R (v3.6.2).
 
@@ -8,19 +9,20 @@ Code Release to accompany paper: [![DOI](https://zenodo.org/badge/xx.svg)](https
 
 ## Step 1: Get the samples information
 
-  ### [CTR_gjb2_0010-Control_Menstrual_SampleTable.txt](Figures_Tables/CTR_gjb2_0010-Control_Menstrual_SampleTable.txt)
+   [CTR_gjb2_0010-Control_Menstrual_SampleTable.txt](Figures_Tables/CTR_gjb2_0010-Control_Menstrual_SampleTable.txt)
 
-  ### Sequencing Data Quality Control (FastQC, v0.11.5), Adapter trimming (Trim_galore, v0.6.4) and alignments processed using ClusterFlow [[GitHub](https://github.com/ewels/clusterflow)] [[DOI](http://dx.doi.org/10.12688/f1000research.10335.2)] with module "fastq_star". Raw reads were aligned to human genome GRCh38 (Ensemble release 84) with STAR (v2.5.1b_modified);
+## Step 2: QC and Alignment pipeline
+ - Sequencing Data Quality Control (FastQC, v0.11.5), Adapter trimming (Trim_galore, v0.6.4) and alignments processed using ClusterFlow [[GitHub](https://github.com/ewels/clusterflow)] [[DOI](http://dx.doi.org/10.12688/f1000research.10335.2)] with pipeline "fastq_star". Raw reads were aligned to human genome GRCh38 (Ensemble release 84) with STAR (v2.5.1b_modified);
 
          eg.  cf --genome GRCh38 --single fastq_star B61_S5_R1_001_merged.fastq.gz
 
-  ### Sequencing Data report summary using MultiQC(v.1.4);
-  ### Gene counts were used HTSeq-Counts (v0.6.1p1)
+ - Sequencing Data report summary using MultiQC(v.1.4);
+ - Gene counts were used HTSeq-Counts (v0.6.1p1)
 
-## Step 2: DESeq2 Analysis
+## Step 3: Differential Analysis using R (v3.6.2) with DESeq2 (v1.26.0)
 
                               Design formula ~ individual + condition
-
+Corresponding results are given below
 
 | Files | Name   |
 | ----------------------------- | --- |
