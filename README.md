@@ -7,7 +7,7 @@ Tereza Cindrova-Davies <sup>1,5</sup>, Xiahui Zhao<sup>1</sup>, Kay Elder<sup>2<
 <sup>4</sup> Department of Pathology, University of Cambridge, Tennis Court Road, Cambridge, CB2 1QP, UK <br>
 **Corresponding author:** Dr Tereza Cindrova-Davies  tc269@cam.ac.uk
 
-Code Release for this github: [![DOI](https://zenodo.org/badge/xx.svg)](https://zenodo.org/badge/latestdoi/xx)
+Code Release for this github: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4696302.svg)](https://doi.org/10.5281/zenodo.4696302)
 
 ## Data Availability
 
