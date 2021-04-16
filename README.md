@@ -65,7 +65,7 @@ Corresponding results are given below
 | Fig/Tab | Link   | Images |Legend |
 | ----------------------------- | --- |----|----|
 |Fig. 2a | [[PDF](Figures_Tables/CTR_gjb2_0010-PCAplot_rld.menstrual_TopN2000.pdf)] |<IMG SRC="Figures_Tables/CTR_gjb2_0010-PCAplot_rld.menstrual_TopN2000.png" width=400px>| PCA plot for the Top 2000 MVs between the menstrual and scratch comparison |
-|Fig. 2b | [[PDF](Figures_Tables/CTR_gjb2_0010-PCAplot_rld.menstrual_TopN2000.pdf)] |<IMG SRC="Figures_Tables/CTR_gjb2_0010-PCAplot_rld.menstrual_TopN2000.png" width=400px>|  Heatmap clustering plot for the 101 DEGs identified|
+|Fig. 2b | [[PDF](Figures_Tables/CTR_gjb2_0010-Heatmap_Control_Menstrual_padj0.05_lfc1_top101.pdf)] |<IMG SRC="Figures_Tables/CTR_gjb2_0010-Heatmap_Control_Menstrual_padj0.05_lfc1_top101.png" width=400px>|  Heatmap clustering plot for the 101 DEGs identified|
 |Fig. 2c | [[PDF](Figures_Tables/CTR_gjb2_0010-Heatmap_endometrial_Menstrual_stemcell_N38_Cat7_ord.pdf)] |<IMG SRC="Figures_Tables/CTR_gjb2_0010-Heatmap_endometrial_Menstrual_stemcell_N38_Cat7_ord.png" width=400px>|  Heatmap for selected markers with interested function|
 |Data-Fig. 2b | [[CSV](Figures_Tables/CTR_gjb2_0010-Menstrual_Control_sigDEGs_N101_List.csv)] || spreadsheet for the 101 DEGs|
 |Data-Fig. 2c|[[XLS](Figures_Tables/Menstrual_StemCell_markers.xls)]| | list for selected markers|
