@@ -1,6 +1,6 @@
-# Menstrual flow as a non-invasive source of endometrial organoids
+# Menstrual flow as a non-invasive source of endometrial organoids 
 Tereza Cindrova-Davies <sup>1,5</sup>, Xiahui Zhao<sup>1</sup>, Kay Elder<sup>2</sup>, Carolyn JP Jones<sup>3</sup>, Ashley Moffett<sup>1,4</sup>, Graham J Burton<sup>1</sup>, Margherita Y Turco<sup>1,4</sup>
-
+[![DOI](https://doi.org/10.1038/s42003-021-02194-y)](https://doi.org/10.1038/s42003-021-02194-y)
 <sup>1</sup> Centre  for  Trophoblast  Research,  Department  of  Physiology,  Development  and  Neuroscience,  University of Cambridge, Downing Street, Cambridge, CB2 3EG, UK <br>
 <sup>2</sup>  Bourn Hall Clinic, High Street, Bourn, Cambridge, CB23 2TN, UK <br>
 <sup>3</sup>  Maternal  and  Fetal  Health  Research  Centre  Division  of  Developmental  Biology  &  Medicine  School  of  Medical  Sciences  Faculty  of  Biology,  Medicine  and  Health  University  of  Manchester,  Manchester Academic Health Science Centre, St Mary's Hospital Oxford Road, Manchester M13 9WL <br>
