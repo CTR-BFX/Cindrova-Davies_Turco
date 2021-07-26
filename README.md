@@ -26,7 +26,7 @@ Corresponding source data and RNASeq  analysis for Endometrial organoids compare
 
 | Files | link   | Name (Corresponding Fig)
 | ----------------------------- | --- |---|
-|Source data.xlsx | [[xlsx](Figures_Tables/Source data.xlsx)] | Single cell assay (**Fig. 1g**) |
+|Source data.xlsx | [[XLSX](Figures_Tables/Source data.xlsx)] | Single cell assay (**Fig. 1g**) |
 |  | |Ki67 quantification (**Fig. 1i**) |
 |  | |qRT-PCR datasets (**Fig. 2d**) |
 |  | |Western blot data (**Fig. 2e,3c**) |
